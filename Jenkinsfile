@@ -22,11 +22,11 @@ pipeline {
             }
         }
         
-        stage('Reporting and Archiving') {
-            steps {
-                junit testResults: 'target/surefire-reports/*.xml'
-            }
-        }
+        // stage('Reporting and Archiving') {
+        //     steps {
+        //         junit testResults: 'target/surefire-reports/*.xml'
+        //     }
+        // }
         
         // You can define more stages here if needed
     }
