@@ -1,9 +1,11 @@
 pipeline {
-    agent  { label 'JDK11' }
+     agent {
+        label 'JDK11'
+    }
     options {
         timeout(time: 1, unit: 'SECONDS')
-        retry(2)     
-        }
+        retry(2)
+    }
     triggers{
       cron ('0 * * * *')
      }
