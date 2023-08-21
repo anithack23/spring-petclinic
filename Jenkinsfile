@@ -8,25 +8,33 @@ pipeline {
       cron ('0 * * * *')
      }
     stages {
-      stage('Source code') {
-            steps { git url: 'https://github.com/anithack23/spring-petclinic.git', branch:'main'}
-      }
-      stage('Build the code'){
-             setps {sh script: 'mvn clean package'}
-      }
-      stage('Reporting and Archiving'){
-        setps{ junit testResults : 'target/surefire-reports/*.xml' }        }
-      }          
-post{ 
-   success{
-    echo "Success"
-}
-    unsuccessful {
-     echo "Failure"
-
-}
+        stage('Source code') {
+            steps {
+                git url: 'https://github.com/anithack23/spring-petclinic.git', branch: 'main'
+            }
+        }
+        
+        stage('Build the code') {
+            steps {
+                sh script: 'mvn clean package'
+            }
+        }
+        
+        stage('Reporting and Archiving') {
+            steps {
+                junit testResults: 'target/surefire-reports/*.xml'
+            }
+        }
+        
+        // You can define more stages here if needed
+    }
     
-}
-
-
+    post { 
+        success {
+            echo "Success"
+        }
+        failure {
+            echo "Failure"
+        }
+    }
 }
