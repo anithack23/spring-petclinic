@@ -1,19 +1,48 @@
-node('JDK11') {
-    stage('sourceCode') {
-       //get the code from git repos
-          git branch: 'main', url: 'https://github.com/anithack23/spring-petclinic.git'
-    }
-    stage('Build the code') {
-            sh 'mvn clean package'
+pipeline {
+    agent  { label 'JDK11' }
+    options {
+        timeout(time: 1, unit: 'SECONDS')
+        retry(2)     
+        }
+    triggers{
+      cron ('0 * * * *')
+     }
+    stages {
+        stage('Source code') {
+            steps {
+                git url: 'https://github.com/anithack23/spring-petclinic.git', branch:'main'
+            }
+       stage('Build the code'){
+             setps{
+                sh script: 'mvn clean package'
+
+
+      stage('Reporting and Archiving'){
+        setps{
+            junit testResults : 'target/surefire-reports/*.xml'
      
      
-    } 
 
-    stage('Archiving and Test Results'){
-            junit '**/surefire-reports/*.xml'
-            archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+      }
+       }
+         }         
+         }
+
+        }
+       }
 
 
-          
-    }
+post{ 
+   success{
+    //send the success email
+
+    echo "Success"
+}
+    unsuccessful{
+     echo "Failure
+
+}
+}
+
+
 }
