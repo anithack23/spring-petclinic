@@ -1,5 +1,5 @@
 pipeline {
-    agent  { label 'JDK11' }
+    agent  { label 'JDK18' }
     options {
         timeout(time: 1, unit: 'SECONDS')
         retry(2)     
