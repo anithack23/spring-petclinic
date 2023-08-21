@@ -8,7 +8,7 @@ pipeline {
       cron ('0 * * * *')
      }
     stages {
-        stage('Source code') {
+      stage('Source code') {
             steps {
                 git url: 'https://github.com/anithack23/spring-petclinic.git', branch:'main'
             }
